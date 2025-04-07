@@ -10,6 +10,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -20,8 +24,8 @@ Route::middleware('auth')->group(function () {
 Route::group(['middleware' => ['auth', 'verified']], function () {
     // Store the newly created meal plan
     Route::post('/meal-plans', [MealPlanController::class, 'store'])->name('mealPlans.store');
-    Route::get('/meal-plans/create', [MealPlanController::class, 'index'])->name('meal-plans.create');
-    Route::get('/mealHome', [MealPlanController::class, 'mealHome'])->name('mealHome');
+    Route::get('/mealhome', [MealPlanController::class, 'index'])->name('meal.home');
+    Route::get('/mealcreate', [MealPlanController::class, 'mealcreate'])->name('meal.create');
     Route::get('/payment', [StripePaymentController::class, 'payment'])->name('payment');
     Route::post('/payment', [StripePaymentController::class, 'createPayment']);
     Route::post('/stripe/webhook', [StripePaymentController::class, 'handleWebhook']);

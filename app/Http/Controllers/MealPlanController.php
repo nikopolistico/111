@@ -23,7 +23,7 @@ class MealPlanController extends Controller
         return view('dashboard', compact('mealPlans'));
     }
 
-    public function mealHome()
+    public function mealcreate()
     {
         return view('mealplans.create');
     }
@@ -44,7 +44,7 @@ class MealPlanController extends Controller
         ]);
 
         // Handle the image upload
-        $imagePath = $request->file('image')->store('public/meal_images'); // Store the image in the 'meal_images' folder
+        $imagePath = $request->file('image')->store('/meal_images'); // Store the image in the 'meal_images' folder
 
         // Generate the URL to access the image
         $imageUrl = Storage::url($imagePath); // This will return the path to the public URL of the image
@@ -61,6 +61,6 @@ class MealPlanController extends Controller
         $mealPlan->save();
 
         // Redirect back to the meal plans page or any desired route with a success message
-        return redirect()->route('meal-plans.create')->with('status', 'Meal Plan created successfully!');
+        return redirect()->route('meal.home')->with('status', 'Meal Plan created successfully!');
     }
 }

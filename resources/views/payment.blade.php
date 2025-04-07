@@ -133,7 +133,7 @@
 
             <div class="error-message" id="error-message"></div>
         </form>
-        <a href="{{ route('meal-plans.create') }}" class="return-button">
+        <a href="{{ route('meal.home') }}" class="return-button">
             Return to Meal Plans
         </a>
     </div>
