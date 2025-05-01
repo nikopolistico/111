@@ -10,30 +10,36 @@
         /* General Body Styles */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #121212;
-            /* Dark background */
             color: #ffffff;
-            /* Light text */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-image: url('/background/summer.jpg');
-            /* Background image */
-            background-size: cover;
-            background-position: center;
+            position: relative;
+        }
+
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
         }
 
         /* Payment Container */
         .payment-container {
             background-color: rgba(0, 0, 0, 0.7);
-            /* Semi-transparent dark background */
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            width: 450px;
+            width: 500px;
             backdrop-filter: blur(5px);
+            z-index: 1;
+            cursor: pointer;
+            /* Make it clear that this is interactive */
         }
 
         h2 {
@@ -55,7 +61,6 @@
 
         .form-group #card-element {
             background-color: #2d2d2d;
-            /* Darker input background */
             padding: 15px;
             border-radius: 8px;
             border: 1px solid #555;
@@ -68,7 +73,6 @@
             padding: 15px;
             font-size: 18px;
             background-color: #ff5c8d;
-            /* Bright color for button */
             color: white;
             border: none;
             border-radius: 8px;
@@ -78,12 +82,10 @@
 
         .form-group button:hover {
             background-color: #e04e79;
-            /* Button hover effect */
         }
 
         .error-message {
             color: #ff5c8d;
-            /* Error message color */
             font-size: 16px;
             text-align: center;
             margin-top: 15px;
@@ -92,31 +94,36 @@
         .return-button {
             display: inline-block;
             margin-top: 1rem;
-            /* mt-4 */
             background-color: #3b82f6;
-            /* bg-blue-500 */
             color: white;
-            /* text-white */
             padding: 0.5rem 1rem;
-            /* py-2 px-4 */
             border-radius: 9999px;
-            /* rounded-full */
             text-align: center;
             text-decoration: none;
-            /* Remove underline */
             transition: background-color 0.3s ease;
-            /* smooth hover transition */
         }
 
         .return-button:hover {
             background-color: #2563eb;
-            /* hover:bg-blue-600 */
         }
     </style>
 </head>
 
 <body>
-    <div class="payment-container">
+
+    <!-- Background Video -->
+    <video class="background-video" autoplay loop muted>
+        <source src="{{ asset('build/assets/videos/subscribe.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Background Music -->
+    <audio id="background-music" autoplay muted loop>
+        <source src="{{ asset('build/assets/music/happy.mp3') }}" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <div class="payment-container" id="payment-container">
         <h2>Payment Details</h2>
         <form action="/payment" method="POST" id="payment-form">
             @csrf
@@ -147,6 +154,15 @@
 
         var form = document.getElementById('payment-form');
         var errorMessage = document.getElementById('error-message');
+
+        // When the payment container is hovered, unmute the audio and play it
+        document.getElementById('payment-container').addEventListener('mouseover', function() {
+            var audio = document.getElementById('background-music');
+            if (audio.paused) {
+                audio.muted = false; // Unmute the audio
+                audio.play(); // Play the audio
+            }
+        });
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();

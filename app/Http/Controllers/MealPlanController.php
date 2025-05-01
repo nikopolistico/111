@@ -40,7 +40,7 @@ class MealPlanController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Image validation
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Image validation
         ]);
 
         // Handle the image upload
